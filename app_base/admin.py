@@ -1,5 +1,3 @@
-
-
 from django.contrib import admin
 
 from app_base.models import Blog
@@ -13,6 +11,7 @@ class BlogAdmin(admin.ModelAdmin):
     list_per_page = 50
     actions = ('set_blog_to_published',)
     date_hierarchy = 'date_created'
+    fields = [('title', 'slug'), 'body', 'is_draft']
 
     def get_ordering(self, request):
         if request.user.is_superuser:
