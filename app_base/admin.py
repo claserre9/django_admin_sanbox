@@ -1,5 +1,5 @@
 from django.contrib import admin
-
+from django.utils import timezone
 from app_base.models import Blog
 
 
@@ -16,6 +16,11 @@ class BlogAdmin(admin.ModelAdmin):
         (None, {'fields': (('title', 'slug'), 'body')}),
         ('Advanced options', {'fields': ('is_draft',), 'description': 'Short description here'}),
     )
+
+    @staticmethod
+    def days_since_creation(blog):
+        diff = timezone.now() - blog.date_created
+        return diff.days
 
     def get_ordering(self, request):
         if request.user.is_superuser:

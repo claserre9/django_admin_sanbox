@@ -1,5 +1,5 @@
 from django.db import models
-from django.utils import timezone
+
 
 
 class Blog(models.Model):
@@ -13,7 +13,3 @@ class Blog(models.Model):
     def __str__(self):
         return f'{self.title}'
 
-    @property
-    def days_since_creation(self):
-        diff = timezone.now() - self.date_created
-        return diff.days
