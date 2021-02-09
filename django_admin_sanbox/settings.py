@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'app_base.apps.AppBaseConfig',
     'django_summernote',
+    'django_admin_listfilter_dropdown',
 ]
 
 MIDDLEWARE = [
@@ -125,4 +126,3 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 SUMMERNOTE_THEME = 'bs4'
 X_FRAME_OPTIONS = 'SAMEORIGIN'
-
