@@ -3,6 +3,7 @@ from django.db.models import Count
 from django.utils import timezone
 from app_base.models import Blog, Comment, Category
 from django_summernote.admin import SummernoteModelAdmin
+from django_admin_listfilter_dropdown.filters import DropdownFilter, RelatedDropdownFilter, ChoiceDropdownFilter
 
 
 class CommentInline(admin.TabularInline):
@@ -30,6 +31,7 @@ class BlogAdmin(SummernoteModelAdmin):
                 'description': 'Short description here', 'classes': ('collapse',)}),
     )
     inlines = (CommentInline,)
+    filter_vertical = ('categories',)
 
     def get_queryset(self, request):
         queryset = super().get_queryset(request)
@@ -62,6 +64,7 @@ class BlogAdmin(SummernoteModelAdmin):
 class CommentAdmin(admin.ModelAdmin):
     list_display = ('blog', 'text', 'date_created', 'is_active')
     list_editable = ('text', 'is_active')
+    list_filter = (('blog', RelatedDropdownFilter),)
 
 
 admin.site.register(Blog, BlogAdmin)
