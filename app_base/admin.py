@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.db.models import Count
 from django.utils import timezone
 from app_base.models import Blog, Comment
 from django_summernote.admin import SummernoteModelAdmin
@@ -8,12 +9,12 @@ class CommentInline(admin.TabularInline):
     model = Comment
     fields = ('text', 'is_active')
     extra = 1
-    classes = ('collapse', )
+    classes = ('collapse',)
 
 
 class BlogAdmin(SummernoteModelAdmin):
     summernote_fields = ('body',)
-    list_display = ['title', 'date_created', 'last_modified', 'is_draft', 'days_since_creation']
+    list_display = ['title', 'date_created', 'last_modified', 'is_draft', 'days_since_creation', 'no_of_comments']
     list_filter = ['is_draft', 'date_created']
     search_fields = ['title']
     prepopulated_fields = {'slug': ('title',)}
@@ -30,10 +31,21 @@ class BlogAdmin(SummernoteModelAdmin):
     )
     inlines = (CommentInline,)
 
+    def get_queryset(self, request):
+        queryset = super().get_queryset(request)
+        queryset = queryset.annotate(comment_count=Count('comments'))
+        return queryset
+
     @staticmethod
     def days_since_creation(blog):
         diff = timezone.now() - blog.date_created
         return diff.days
+
+    @staticmethod
+    def no_of_comments(blog):
+        return blog.comment_count
+
+    no_of_comments.admin_order_fields = 'comment_count'
 
     def get_ordering(self, request):
         if request.user.is_superuser:
