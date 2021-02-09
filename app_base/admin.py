@@ -1,9 +1,11 @@
 from django.contrib import admin
 from django.db.models import Count
 from django.utils import timezone
+from rangefilter.filter import DateRangeFilter
+
 from app_base.models import Blog, Comment, Category
 from django_summernote.admin import SummernoteModelAdmin
-from django_admin_listfilter_dropdown.filters import DropdownFilter, RelatedDropdownFilter, ChoiceDropdownFilter
+from django_admin_listfilter_dropdown.filters import RelatedDropdownFilter
 
 
 class CommentInline(admin.TabularInline):
@@ -64,7 +66,7 @@ class BlogAdmin(SummernoteModelAdmin):
 class CommentAdmin(admin.ModelAdmin):
     list_display = ('blog', 'text', 'date_created', 'is_active')
     list_editable = ('text', 'is_active')
-    list_filter = (('blog', RelatedDropdownFilter),)
+    list_filter = (('blog', RelatedDropdownFilter), ('date_created', DateRangeFilter),)
 
 
 admin.site.register(Blog, BlogAdmin)

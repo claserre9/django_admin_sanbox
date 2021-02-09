@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'app_base.apps.AppBaseConfig',
     'django_summernote',
     'django_admin_listfilter_dropdown',
+    'rangefilter',
 ]
 
 MIDDLEWARE = [
