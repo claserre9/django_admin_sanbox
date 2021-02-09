@@ -1,11 +1,16 @@
 from django.contrib import admin
 from django.db.models import Count
 from django.utils import timezone
+from import_export.admin import ImportExportModelAdmin
 from rangefilter.filter import DateRangeFilter
 
 from app_base.models import Blog, Comment, Category
 from django_summernote.admin import SummernoteModelAdmin
 from django_admin_listfilter_dropdown.filters import RelatedDropdownFilter
+
+from app_base.resources import CommentResource
+
+
 
 
 class CommentInline(admin.TabularInline):
@@ -63,10 +68,11 @@ class BlogAdmin(SummernoteModelAdmin):
     set_blog_to_published.short_description = "Mark selected blogs as published"
 
 
-class CommentAdmin(admin.ModelAdmin):
+class CommentAdmin(ImportExportModelAdmin):
     list_display = ('blog', 'text', 'date_created', 'is_active')
     list_editable = ('text', 'is_active')
     list_filter = (('blog', RelatedDropdownFilter), ('date_created', DateRangeFilter),)
+    resource_class = CommentResource
 
 
 admin.site.register(Blog, BlogAdmin)
