@@ -4,6 +4,12 @@ from app_base.models import Blog, Comment
 from django_summernote.admin import SummernoteModelAdmin
 
 
+class CommentInline(admin.TabularInline):
+    model = Comment
+    fields = ('text', 'is_active')
+    extra = 1
+
+
 class BlogAdmin(SummernoteModelAdmin):
     summernote_fields = ('body',)
     list_display = ['title', 'date_created', 'last_modified', 'is_draft', 'days_since_creation']
@@ -18,6 +24,7 @@ class BlogAdmin(SummernoteModelAdmin):
         (None, {'fields': (('title', 'slug'), 'body')}),
         ('Advanced options', {'fields': ('is_draft',), 'description': 'Short description here'}),
     )
+    inlines = (CommentInline, )
 
     @staticmethod
     def days_since_creation(blog):
