@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.utils import timezone
-from app_base.models import Blog
+from app_base.models import Blog, Comment
 from django_summernote.admin import SummernoteModelAdmin
 
 
@@ -36,4 +36,9 @@ class BlogAdmin(SummernoteModelAdmin):
     set_blog_to_published.short_description = "Mark selected blogs as published"
 
 
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ('blog', 'text', 'date_created', 'is_active')
+
+
 admin.site.register(Blog, BlogAdmin)
+admin.site.register(Comment, CommentAdmin)
