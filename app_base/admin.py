@@ -8,6 +8,7 @@ class CommentInline(admin.TabularInline):
     model = Comment
     fields = ('text', 'is_active')
     extra = 1
+    classes = ('collapse', )
 
 
 class BlogAdmin(SummernoteModelAdmin):
@@ -22,7 +23,10 @@ class BlogAdmin(SummernoteModelAdmin):
     # fields = [('title', 'slug'), 'body', 'is_draft']
     fieldsets = (
         (None, {'fields': (('title', 'slug'), 'body')}),
-        ('Advanced options', {'fields': ('is_draft',), 'description': 'Short description here'}),
+        (
+            'Advanced options', {
+                'fields': ('is_draft',),
+                'description': 'Short description here', 'classes': ('collapse',)}),
     )
     inlines = (CommentInline,)
 
