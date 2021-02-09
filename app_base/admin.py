@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.db.models import Count
 from django.utils import timezone
-from app_base.models import Blog, Comment
+from app_base.models import Blog, Comment, Category
 from django_summernote.admin import SummernoteModelAdmin
 
 
@@ -66,3 +66,4 @@ class CommentAdmin(admin.ModelAdmin):
 
 admin.site.register(Blog, BlogAdmin)
 admin.site.register(Comment, CommentAdmin)
+admin.site.register(Category, )
