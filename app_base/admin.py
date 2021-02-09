@@ -26,7 +26,7 @@ class BlogAdmin(SummernoteModelAdmin):
         (None, {'fields': (('title', 'slug'), 'body')}),
         (
             'Advanced options', {
-                'fields': ('is_draft',),
+                'fields': ('is_draft', 'categories'),
                 'description': 'Short description here', 'classes': ('collapse',)}),
     )
     inlines = (CommentInline,)
