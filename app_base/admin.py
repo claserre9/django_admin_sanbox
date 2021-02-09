@@ -24,7 +24,7 @@ class BlogAdmin(SummernoteModelAdmin):
         (None, {'fields': (('title', 'slug'), 'body')}),
         ('Advanced options', {'fields': ('is_draft',), 'description': 'Short description here'}),
     )
-    inlines = (CommentInline, )
+    inlines = (CommentInline,)
 
     @staticmethod
     def days_since_creation(blog):
@@ -45,6 +45,7 @@ class BlogAdmin(SummernoteModelAdmin):
 
 class CommentAdmin(admin.ModelAdmin):
     list_display = ('blog', 'text', 'date_created', 'is_active')
+    list_editable = ('text', 'is_active')
 
 
 admin.site.register(Blog, BlogAdmin)
