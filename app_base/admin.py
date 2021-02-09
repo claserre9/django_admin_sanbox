@@ -1,9 +1,11 @@
 from django.contrib import admin
 from django.utils import timezone
 from app_base.models import Blog
+from django_summernote.admin import SummernoteModelAdmin
 
 
-class BlogAdmin(admin.ModelAdmin):
+class BlogAdmin(SummernoteModelAdmin):
+    summernote_fields = ('body',)
     list_display = ['title', 'date_created', 'last_modified', 'is_draft', 'days_since_creation']
     list_filter = ['is_draft', 'date_created']
     search_fields = ['title']
